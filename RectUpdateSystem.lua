@@ -30,7 +30,7 @@ local RectUpdateSystem = System({C.Acceleration, C.PlayerInput, C.BumpSensor})
        end
        if input.pressedKeys["z"] then
         if sensor.on then
-          a.y = -arate * 100
+          a.y = -arate * 200
         end
        end
        if input.pressedKeys["down"] then

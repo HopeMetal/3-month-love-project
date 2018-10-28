@@ -19,12 +19,37 @@ local FrictionSystem = System({C.Velocity, C.Friction})
        local f = e:get(C.Friction)
 
        local fric = f.v
-       
-       v.x = v.x > 0 and v.x - fric * dt or v.x < 0 and v.x + fric * dt or 0
-       v.y = v.y > 0 and v.y - fric * dt or v.y < 0 and v.y + fric * dt or 0
+
+        if v.x > 0 then
+          v.x = v.x - fric * dt
+          if v.x < 0 then
+            v.x = 0
+          end 
+        elseif v.x < 0 then
+          v.x = v.x + fric * dt
+          if v.x > 0 then
+            v.x = 0
+          end
+        end
+       --v.y = v.y > 0 and v.y - fric * dt or v.y < 0 and v.y + fric * dt or 0
     end 
     -- Alternatively:
     -- for _, e in ipairs(self.pool.objects) do
  end
+
+ function FrictionSystem:draw()
+  local e
+  for i = 1, self.pool.size do
+     e = self.pool:get(i)
+     
+     local v = e:get(C.Velocity)
+     local f = e:get(C.Friction)
+
+     love.graphics.print("velocity: "..v.x.."; "..v.y, 0, 24)
+     --v.y = v.y > 0 and v.y - fric * dt or v.y < 0 and v.y + fric * dt or 0
+  end 
+  -- Alternatively:
+  -- for _, e in ipairs(self.pool.objects) do
+end
 
  return FrictionSystem

@@ -131,7 +131,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
       
       for j = 1, self.bodies.size do
         e = self.bodies:get(j)
-        print("drawing rect from entity "..tostring(e))
+        --print("drawing rect from entity "..tostring(e))
         local x, y, width, height = w:getRect(e)
         love.graphics.rectangle("line", x, y, width, height)
       end
@@ -144,7 +144,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
         if s.on then
           love.graphics.setColor(0, 0, 1, 0.6)
         end
-        print("drawing rect from entity "..tostring(s))
+        --print("drawing rect from entity "..tostring(s))
         local x, y, width, height = w:getRect(s)
         love.graphics.rectangle("line", x, y, width, height)
       end

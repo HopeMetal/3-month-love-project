@@ -19,7 +19,7 @@ local GravitySystem = System({C.Acceleration, C.Gravity})
        local a = e:get(C.Acceleration)
        local g = e:get(C.Gravity)
 
-       a.y = a.y + (g.g * math.sqrt(dt))/2
+       a.y = a.y + g.g * dt
     end 
     -- Alternatively:
     -- for _, e in ipairs(self.pool.objects) do

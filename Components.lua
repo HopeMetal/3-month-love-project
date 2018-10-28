@@ -13,7 +13,7 @@ Components.Ball = Component(function(self) self.a = "ball" end)
 Components.BumpSensor = Component(function(self, x, y, w, h) self.name = "BumpSensor" self.x = x self.y = y self.w = w self.h = h self.on = false end)
 
 local function playerInput(self, arate)
-    self.arate = arate or 320
+    self.arate = arate or 640
     self.pressedKeys = {}
     self.actions = {["z"] = 1, ["down"] = 1, ["left"] = 1, ["right"] = 1}
 end
@@ -30,5 +30,11 @@ Components.World = Component(function(self) end)
 Components.Bounce = Component(function(self, b) self.b = b or 80 end)
 
 Components.Score = Component(function(self, o) self.s = 0 self.o = o end)
+
+Components.Camera = Component(function(self) end)
+
+Components.Time = Component(function(self) self.m = 0 self.s = 0 self.dtpassed = 0 self.active = true end)
+
+Components.Exit = Component(function(self) end)
 
 return Components

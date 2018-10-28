@@ -42,6 +42,7 @@ local ScoreSystem = System({C.Position, C.Score}, {C.Position, C.Bounce, "ball"}
   for i = 1, self.pool.size do
      e = self.pool:get(i)
      
+     love.graphics.origin()
      local p = e:get(C.Position)
      local s = e:get(C.Score)
      love.graphics.print(s.s, p.x, p.y)

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="24" tileheight="24" infinite="0" nextobjectid="6">
+ <objectgroup name="objects">
+  <object id="1" x="192" y="360" width="312" height="72"/>
+  <object id="2" x="600" y="360" width="216" height="72"/>
+  <object id="3" x="408" y="312" width="72" height="48"/>
+  <object id="4" name="exit" x="744" y="312" width="48" height="48">
+   <properties>
+    <property name="Exit" value=""/>
+   </properties>
+  </object>
+  <object id="5" name="playerSpawn" x="288" y="279" width="24" height="80"/>
+ </objectgroup>
+</map>

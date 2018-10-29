@@ -1,12 +1,14 @@
 TODO:
 
-Load the level that was made in Tiled into the game.
+Moving platforms
 
 LATER:
-Level editor
+Potentially better physics
+Integrated Level editor
 
 DONE:
 
+Load the level that was made in Tiled into the game.
 Level exit
 Time keeping
 Camera movement

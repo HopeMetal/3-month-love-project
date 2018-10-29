@@ -20,21 +20,26 @@ local RectUpdateSystem = System({C.Acceleration, C.PlayerInput, C.BumpSensor})
        local sensor = e:get(C.BumpSensor)
 
        local arate = input.arate * dt
+       local energyX = input.arate * dt
+       local energyY = input.arate
        --print(v)
        --print(v.x)
        if input.pressedKeys["left"] then
-        a.x = -arate
+        --a.x = -arate
+        a.energyX = -arate
        end
        if input.pressedKeys["right"]then
-        a.x = arate
+        --a.x = arate
+        a.energyX = arate
        end
        if input.pressedKeys["z"] then
         if sensor.on then
-          a.y = -arate * 200
+          --a.y = -arate * 10
+          a.energyY = -arate * 20
         end
        end
        if input.pressedKeys["down"] then
-        a.y = arate
+        --a.y = arate
        end
 
        --print(a.x, a.y)

@@ -35,6 +35,7 @@ local VelocitySystem = System({C.World, "world"}, {C.Position, C.Velocity, "bodi
         local pitem = item:get(C.Position)
         local pother = other:get(C.Position)
         local rectother = other:get(C.Rect)
+        
         if item:has(C.Bounce) then
           local bounce = item:get(C.Bounce)
           if pitem.x < pother.x then

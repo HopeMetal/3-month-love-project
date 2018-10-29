@@ -44,8 +44,11 @@ local FrictionSystem = System({C.Velocity, C.Friction})
      
      local v = e:get(C.Velocity)
      local f = e:get(C.Friction)
+     local a = e:get(C.Acceleration)
 
      love.graphics.print("velocity: "..v.x.."; "..v.y, 0, 24)
+     love.graphics.print("energyY: "..a.energyY, 0, 48)
+     love.graphics.print("dt: "..love.timer.getDelta(), 0, 64)
      --v.y = v.y > 0 and v.y - fric * dt or v.y < 0 and v.y + fric * dt or 0
   end 
   -- Alternatively:

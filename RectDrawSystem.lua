@@ -19,14 +19,14 @@ local RectDrawSystem = System({C.Rect, C.Position})
        local r = e:get(C.Rect)
        local p = e:get(C.Position)
        --print(r.w, r.h)
---[[
+
        love.graphics.setCanvas(self.traceCanvas)
        love.graphics.setColor(1, 0, 0, 0.4)
        love.graphics.rectangle("fill", p.x, p.y, 2, 2)
        love.graphics.setCanvas()
        love.graphics.setColor(1, 1, 1, 1)
        love.graphics.draw(self.traceCanvas, 0, 0)
-  ]]
+  
        love.graphics.setColor(0, 1, 0)
        love.graphics.rectangle("fill", p.x, p.y, r.w, r.h)
        love.graphics.setColor(1, 1, 1)

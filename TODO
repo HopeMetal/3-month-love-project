@@ -1,6 +1,6 @@
 TODO:
 
-Moving platforms
+Differentiate moving/movable objects from static ones.
 
 LATER:
 Potentially better physics
@@ -8,6 +8,7 @@ Integrated Level editor
 
 DONE:
 
+Moving platforms (very barebones implementation (buggy))
 Load the level that was made in Tiled into the game.
 Level exit
 Time keeping

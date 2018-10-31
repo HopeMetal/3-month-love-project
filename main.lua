@@ -83,6 +83,7 @@ local playerSpawn
 local exitSpawn
 
 local wallsToAdd = {}
+local mplatsToAdd = {}
 
 for objindex, object in pairs(map.layers[1].objects) do
   if object.name == "playerSpawn" then
@@ -95,6 +96,8 @@ for objindex, object in pairs(map.layers[1].objects) do
     exitSpawn.y = object.y
     exitSpawn.w = object.width
     exitSpawn.h = object.height
+  elseif object.name == "mplat" then
+    mplatsToAdd[#mplatsToAdd + 1] = {x = object.x, y = object.y, w = object.width, h = object.height, yVel = object.properties.yVelocity}
   else
     wallsToAdd[#wallsToAdd + 1] = {x = object.x, y = object.y, w = object.width, h = object.height}
   end
@@ -178,6 +181,20 @@ while #wallsToAdd > 0 do
 
      myInstance:addEntity(wallEntity)
      table.remove(wallsToAdd)
+end
+
+while #mplatsToAdd > 0 do
+  ind = #mplatsToAdd
+   local wall = mplatsToAdd[ind]
+   local wallEntity = Entity()
+   wallEntity:give(C.Position, wall.x, wall.y)
+   :give(C.Rect, wall.w, wall.h)
+   :give(C.Velocity, 0, wall.yVel)
+   :give(C.MPlat)
+   :apply()
+
+   myInstance:addEntity(wallEntity)
+   table.remove(mplatsToAdd)
 end
 
 

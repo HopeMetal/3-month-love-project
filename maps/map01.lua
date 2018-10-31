@@ -8,7 +8,7 @@ return {
   height = 40,
   tilewidth = 24,
   tileheight = 24,
-  nextobjectid = 6,
+  nextobjectid = 7,
   properties = {},
   tilesets = {},
   layers = {
@@ -82,12 +82,27 @@ return {
           type = "",
           shape = "rectangle",
           x = 288,
-          y = 279,
+          y = 336,
           width = 24,
-          height = 80,
+          height = 24,
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 6,
+          name = "mplat",
+          type = "",
+          shape = "rectangle",
+          x = 528,
+          y = 648,
+          width = 48,
+          height = 24,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["yVelocity"] = -120
+          }
         }
       }
     }

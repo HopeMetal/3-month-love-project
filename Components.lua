@@ -3,7 +3,7 @@ local Components = {}
 
 Components.Rect = Component(function(self, w, h) self.w = w self.h = h end)
 Components.Position = Component(function(self, x, y) self.x = x self.y = y end)
-Components.Velocity = Component(function(self, x, y, max) self.x = x or 0 self.y = y or 0 self.max = max or 100 end)
+Components.Velocity = Component(function(self, x, y, max) self.x = x or 0 self.y = y or 0 self.max = max or 300 end)
 Components.Acceleration = Component(function(self, x, y) self.x = x self.y = y self.energyX = 0 self.energyY = 0 end)
 Components.Friction = Component(function(self, v) self.v = v or 50 end)
 Components.Gravity = Component(function(self, g) self.g = g or 10 end)
@@ -36,5 +36,7 @@ Components.Camera = Component(function(self) end)
 Components.Time = Component(function(self) self.m = 0 self.s = 0 self.dtpassed = 0 self.active = true end)
 
 Components.Exit = Component(function(self) end)
+
+Components.MPlat = Component(function(self) end)
 
 return Components

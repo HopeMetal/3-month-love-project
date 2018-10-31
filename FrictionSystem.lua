@@ -17,6 +17,7 @@ local FrictionSystem = System({C.Velocity, C.Friction})
        
        local v = e:get(C.Velocity)
        local f = e:get(C.Friction)
+       local s = e:get(C.BumpSensor)
 
        local fric = f.v
 

@@ -22,18 +22,20 @@ local AccelSystem = System({C.Velocity, C.Acceleration})
        local maxvel = v.max
 
        if a.energyX > 0 then
-        a.energyX = a.energyX - 640
+        a.energyX = a.energyX - 640 * dt
         a.x = 640 * dt
         if a.energyX < 0 then
           a.energyX = 0
+          a.x = 0
         end
        end
 
        if a.energyX < 0 then
-        a.energyX = a.energyX + 640
+        a.energyX = a.energyX + 640 * dt
         a.x = -640 * dt
         if a.energyX > 0 then
           a.energyX = 0
+          a.x = 0
         end
        end
 
@@ -42,6 +44,7 @@ local AccelSystem = System({C.Velocity, C.Acceleration})
         a.y = -640 * dt
         if a.energyY > 0 then
           a.energyY = 0
+          a.y = 0
         end
        end
        

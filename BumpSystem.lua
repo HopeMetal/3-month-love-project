@@ -78,7 +78,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
       if e:has(C.Velocity) then
         local v = e:get(C.Velocity)
         if v.x ~= 0 or v.y ~= 0 then
-          local actualX, actualY, cols, len = world:move(e, p.x + v.x * dt, p.y + v.y * dt, filter)
+          local actualX, actualY, cols, len = world:check(e, p.x + v.x * dt, p.y + v.y * dt, filter)
           for c = 1, len do
             local item = cols[c].item
             local other = cols[c].other
@@ -86,6 +86,15 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
             local pitem = item:get(C.Position)
             local pother = other:get(C.Position)
             local rectother = other:get(C.Rect)
+            local itemrect = item:get(C.Rect)
+
+            if item:has(C.Velocity) and other:has(C.Velocity) then
+              local vitem = item:get(C.Velocity)
+              local vother = other:get(C.Velocity)
+              --pother.x = pitem.x + (pother.x - pitem.x)
+              --pother.y = pother.y + vitem.y * dt
+              vother.y = vitem.y
+            end
 
             if item:has(C.Bounce) then
               local bounce = item:get(C.Bounce)
@@ -98,6 +107,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
               v.y = v.y - bounce.b
             end
           end
+          world:update(e, actualX, actualY)
 
           p.x = actualX
           p.y = actualY

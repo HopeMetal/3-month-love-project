@@ -1,7 +1,12 @@
 local Component = require("libs.Concord.component")
 local Components = {}
 
-Components.Rect = Component(function(self, w, h) self.w = w self.h = h end)
+Components.Rect = Component(function(self, w, h, s)
+    self.w = w self.h = h self.isSensor = s or false
+    if s then
+        self.on = false
+    end
+ end)
 Components.Position = Component(function(self, x, y) self.x = x self.y = y end)
 Components.Velocity = Component(function(self, x, y, max) self.x = x or 0 self.y = y or 0 self.max = max or 300 end)
 Components.Acceleration = Component(function(self, x, y) self.x = x self.y = y self.energyX = 0 self.energyY = 0 end)
@@ -16,6 +21,7 @@ local function playerInput(self, arate)
     self.arate = arate or 640
     self.pressedKeys = {}
     self.actions = {["z"] = 1, ["down"] = 1, ["left"] = 1, ["right"] = 1}
+    self.onGround = false
 end
 Components.PlayerInput = Component(playerInput)
 

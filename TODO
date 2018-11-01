@@ -1,6 +1,9 @@
 TODO:
 
 Differentiate moving/movable objects from static ones.
+Moving platform imporvements: make jumping off a moving platform work
+    Currently player teleports to the bottom of a platform if they attempt to jump off it.
+    Weirdness when jumping onto a corner
 
 LATER:
 Potentially better physics

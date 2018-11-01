@@ -13,6 +13,7 @@ local RectDrawSystem = System({C.Rect, C.Position})
  
  function RectDrawSystem:draw()
     local e
+    local drawStyle
     for i = 1, self.pool.size do
        e = self.pool:get(i)
  
@@ -26,9 +27,20 @@ local RectDrawSystem = System({C.Rect, C.Position})
        love.graphics.setCanvas()
        love.graphics.setColor(1, 1, 1, 1)
        love.graphics.draw(self.traceCanvas, 0, 0)
-  
-       love.graphics.setColor(0, 1, 0)
-       love.graphics.rectangle("fill", p.x, p.y, r.w, r.h)
+
+       if r.isSensor then
+        drawStyle = "line"
+        if r.on then
+          love.graphics.setColor(1, 0, 0)
+        else
+          love.graphics.setColor(0, 0, 1)
+        end
+       else
+        drawStyle = "fill"
+        love.graphics.setColor(0, 1, 0)
+       end
+
+       love.graphics.rectangle(drawStyle, p.x, p.y, r.w, r.h)
        love.graphics.setColor(1, 1, 1)
 
     end

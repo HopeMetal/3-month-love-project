@@ -28,15 +28,20 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
      pool.name == "bodies" then
       table.insert(self.bodiesToAdd, e)
      --self.bodiesToAdd[#self.bodiesToAdd + 1] = e
-  elseif
+  end
+  --[[elseif
       pool.name == "sensors" then
         table.insert(self.sensorsToAdd, e)
-      end
+      end]]
  end
  
  local function filter(item, other)
-  if item.name == "BumpSensor" or other.name == "BumpSensor" then
-    return false
+  if item:has(C.PlayerInput) then
+    if other:has(C.MPlat) then
+      return "slide"
+    else
+      return "slide"
+    end
   else
     return "slide"
   end
@@ -59,7 +64,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
        table.remove(self.bodiesToAdd)
     end
     --add sensors to world
-    while #self.sensorsToAdd > 0 do
+    --[[while #self.sensorsToAdd > 0 do
       ind = #self.sensorsToAdd
        e = self.sensorsToAdd[#self.sensorsToAdd]
        local r = e:get(C.Rect)
@@ -69,7 +74,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
        world:add(s, p.x + s.x, p.y + s.y, s.w, s.h)
        print("adding rect from entity "..tostring(v))
        table.remove(self.sensorsToAdd)
-    end
+    end]]
     --update all the bodies with a non zero velocity
     for i = 1, self.bodies.size do
       e = self.bodies:get(i)
@@ -78,22 +83,39 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
       if e:has(C.Velocity) then
         local v = e:get(C.Velocity)
         if v.x ~= 0 or v.y ~= 0 then
-          local actualX, actualY, cols, len = world:check(e, p.x + v.x * dt, p.y + v.y * dt, filter)
+          local goalX = p.x + v.x * dt
+          local goalY = p.y + v.y * dt
+          local actualX, actualY, cols, len = world:check(e, goalX, goalY, filter)
           for c = 1, len do
             local item = cols[c].item
             local other = cols[c].other
+
             --print("item "..tostring(item).." collided with "..tostring(other))
             local pitem = item:get(C.Position)
             local pother = other:get(C.Position)
             local rectother = other:get(C.Rect)
             local itemrect = item:get(C.Rect)
 
-            if item:has(C.Velocity) and other:has(C.Velocity) then
+            --[[if item:has(C.PlayerInput) and other:has(C.MPlat) then
               local vitem = item:get(C.Velocity)
               local vother = other:get(C.Velocity)
               --pother.x = pitem.x + (pother.x - pitem.x)
               --pother.y = pother.y + vitem.y * dt
-              vother.y = vitem.y
+              vitem.y = vother.y
+            end]]
+
+            if item:has(C.MPlat) and other:has(C.PlayerInput) then
+              actualX = goalX
+              actualY = goalY
+              
+              pother.y = pitem.y - rectother.h
+              --print(pother.y)
+            end
+
+            if item:has(C.PlayerInput) then
+              if cols[c].normal.y == -1 and cols[c].normal.x == 0 then
+                item:get(C.PlayerInput).onGround = true
+              end
             end
 
             if item:has(C.Bounce) then
@@ -114,7 +136,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
         end
       end
       --update all active sensors
-      for s = 1, self.sensors.size do
+      --[[for s = 1, self.sensors.size do
         local entity = self.sensors:get(s)
         local sensor = entity:get(C.BumpSensor)
         local p = entity:get(C.Position)
@@ -126,7 +148,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
         else
           sensor.on = false
         end
-      end
+      end]]
    end 
     -- Alternatively:
     -- for _, e in ipairs(self.pool.objects) do
@@ -147,7 +169,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
       end
 
       
-      for j = 1, self.sensors.size do
+      --[[for j = 1, self.sensors.size do
         love.graphics.setColor(1, 0, 0, 0.6)
         e = self.sensors:get(j)
         local s = e:get(C.BumpSensor)
@@ -157,7 +179,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
         --print("drawing rect from entity "..tostring(s))
         local x, y, width, height = w:getRect(s)
         love.graphics.rectangle("line", x, y, width, height)
-      end
+      end]]
     end
   love.graphics.setColor(1, 1, 1, 1)
  end

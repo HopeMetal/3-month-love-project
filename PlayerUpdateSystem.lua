@@ -1,6 +1,6 @@
 local System = require("libs.Concord.system")
 local C = require("Components")
-local RectUpdateSystem = System({C.Acceleration, C.PlayerInput, C.BumpSensor})
+local RectUpdateSystem = System({C.Acceleration, C.PlayerInput})
 
   function RectUpdateSystem:init(message)
     print(message)
@@ -17,7 +17,6 @@ local RectUpdateSystem = System({C.Acceleration, C.PlayerInput, C.BumpSensor})
        
        local a = e:get(C.Acceleration)
        local input = e:get(C.PlayerInput)
-       local sensor = e:get(C.BumpSensor)
 
        local arate = input.arate * dt
        local energyX = input.arate * dt
@@ -33,9 +32,10 @@ local RectUpdateSystem = System({C.Acceleration, C.PlayerInput, C.BumpSensor})
         a.energyX = arate
        end
        if input.pressedKeys["z"] then
-        if sensor.on then
+        if input.onGround then
           --a.y = -arate * 10
           a.energyY = -arate * 20
+          input.onGround = false
         end
        end
        if input.pressedKeys["down"] then

@@ -20,33 +20,6 @@ local AccelSystem = System({C.Velocity, C.Acceleration})
        local v = e:get(C.Velocity)
 
        local maxvel = v.max
-
-       if a.energyX > 0 then
-        a.energyX = a.energyX - 640 * dt
-        a.x = 640 * dt
-        if a.energyX < 0 then
-          a.energyX = 0
-          a.x = 0
-        end
-       end
-
-       if a.energyX < 0 then
-        a.energyX = a.energyX + 640 * dt
-        a.x = -640 * dt
-        if a.energyX > 0 then
-          a.energyX = 0
-          a.x = 0
-        end
-       end
-
-       if a.energyY < 0 then
-        a.energyY = a.energyY + 640 * dt
-        a.y = -640 * dt
-        if a.energyY > 0 then
-          a.energyY = 0
-          a.y = 0
-        end
-       end
        
        if v.x > -maxvel then
         v.x = v.x + a.x
@@ -58,7 +31,7 @@ local AccelSystem = System({C.Velocity, C.Acceleration})
        else
         v.x = maxvel
        end
-       if v.y > -maxvel then
+       --[[if v.y > -maxvel then
         v.y = v.y + a.y
        else
         v.y = -maxvel
@@ -67,7 +40,9 @@ local AccelSystem = System({C.Velocity, C.Acceleration})
         v.y = v.y + a.y
        else
         v.y = maxvel
-       end
+       end]]--
+
+       v.y = v.y + a.y
 
        a.x = 0
        a.y = 0

@@ -1,6 +1,6 @@
 local System = require("libs.Concord.system")
 local C = require("Components")
-local RectUpdateSystem = System({C.Acceleration, C.PlayerInput})
+local RectUpdateSystem = System({C.Acceleration, C.Position, C.Velocity, C.Rect, C.PlayerInput})
 
   function RectUpdateSystem:init(message)
     print(message)
@@ -17,6 +17,8 @@ local RectUpdateSystem = System({C.Acceleration, C.PlayerInput})
        
        local a = e:get(C.Acceleration)
        local input = e:get(C.PlayerInput)
+       local p = e:get(C.Position)
+       local v = e:get(C.Velocity)
 
        local arate = input.arate * dt
        local energyX = input.arate * dt
@@ -34,13 +36,51 @@ local RectUpdateSystem = System({C.Acceleration, C.PlayerInput})
        if input.pressedKeys["z"] then
         if input.onGround then
           --a.y = -arate * 10
-          a.energyY = -arate * 20
+          local extraV = 0
           input.onGround = false
+          if input.groundVelocity then
+            extraV = input.groundVelocity.y
+          end
+          v.y = -input.arate / 2.5 + extraV
+          if input.groundPosition then
+            p.y = input.groundPosition.y + extraV * dt - e:get(C.Rect).h
+          end
+          --[[if input.groundVelocity then
+            p.y = p.y + input.groundVelocity.y * dt
+          end]]
+          --a.energyY = -arate * 20
         end
        end
        if input.pressedKeys["down"] then
         --a.y = arate
        end
+
+       if a.energyX > 0 then
+        a.energyX = a.energyX - arate
+        a.x = arate
+        if a.energyX < 0 then
+          a.energyX = 0
+          a.x = 0
+        end
+       end
+
+       if a.energyX < 0 then
+        a.energyX = a.energyX + arate
+        a.x = -arate
+        if a.energyX > 0 then
+          a.energyX = 0
+          a.x = 0
+        end
+       end
+
+      --[[ if a.energyY < 0 then
+        a.energyY = a.energyY + arate
+        a.y = -arate
+        if a.energyY > 0 then
+          a.energyY = 0
+          a.y = 0
+        end
+       end]]
 
        --print(a.x, a.y)
     end

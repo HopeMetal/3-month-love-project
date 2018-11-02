@@ -15,6 +15,9 @@ function KeyPressedSystem:keypressed(key)
     if key == "escape" then
         love.event.quit()
     end
+    if key == "r" then
+        love.event.quit("restart")
+    end
     local e
     for i = 1, self.pool.size do
        e = self.pool:get(i)

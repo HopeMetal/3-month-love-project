@@ -36,11 +36,9 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
  end
  
  local function filter(item, other)
-  if item:has(C.PlayerInput) then
-    if other:has(C.MPlat) then
-      return "slide"
-    else
-      return "slide"
+  if item:has(C.MPlat) then
+    if other:has(C.PlayerInput) then
+      return nil
     end
   else
     return "slide"
@@ -82,7 +80,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
       local p = e:get(C.Position)
       if e:has(C.Velocity) then
         local v = e:get(C.Velocity)
-        if v.x ~= 0 or v.y ~= 0 then
+        --if v.x ~= 0 or v.y ~= 0 then
           local goalX = p.x + v.x * dt
           local goalY = p.y + v.y * dt
           local actualX, actualY, cols, len = world:check(e, goalX, goalY, filter)
@@ -96,25 +94,21 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
             local rectother = other:get(C.Rect)
             local itemrect = item:get(C.Rect)
 
-            --[[if item:has(C.PlayerInput) and other:has(C.MPlat) then
-              local vitem = item:get(C.Velocity)
-              local vother = other:get(C.Velocity)
-              --pother.x = pitem.x + (pother.x - pitem.x)
-              --pother.y = pother.y + vitem.y * dt
-              vitem.y = vother.y
-            end]]
-
-            if item:has(C.MPlat) and other:has(C.PlayerInput) then
-              actualX = goalX
-              actualY = goalY
-              
-              pother.y = pitem.y - rectother.h
-              --print(pother.y)
-            end
 
             if item:has(C.PlayerInput) then
               if cols[c].normal.y == -1 and cols[c].normal.x == 0 then
-                item:get(C.PlayerInput).onGround = true
+                local input = item:get(C.PlayerInput)
+                input.onGround = true
+                if other:has(C.Velocity) then
+                  input.groundVelocity = other:get(C.Velocity)
+                else
+                  input.groundVelocity = nil
+                end
+                if other:has(C.Position) then
+                  input.groundPosition = other:get(C.Position)
+                else
+                  input.groundPosition = nil
+                end
               end
             end
 
@@ -133,22 +127,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
 
           p.x = actualX
           p.y = actualY
-        end
       end
-      --update all active sensors
-      --[[for s = 1, self.sensors.size do
-        local entity = self.sensors:get(s)
-        local sensor = entity:get(C.BumpSensor)
-        local p = entity:get(C.Position)
-
-        world:update(sensor, p.x + sensor.x, p.y + sensor.y)
-        local _, __, cols, len = world:check(sensor, p.x + sensor.x, p.y + sensor.y)
-        if len > 0 then
-          sensor.on = true
-        else
-          sensor.on = false
-        end
-      end]]
    end 
     -- Alternatively:
     -- for _, e in ipairs(self.pool.objects) do

@@ -38,12 +38,21 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
  local function filter(item, other)
   if item:has(C.MPlat) then
     if other:has(C.PlayerInput) then
-      return nil
+      return "cross"
     end
+  elseif item:has(C.PlayerInput) and other:has(C.MPlat) then
+    return "cross"
   else
     return "slide"
   end
  end
+
+local function platfilter(item, other)
+  print("collision with platfilter")
+  if item:has(C.PlayerInput) and other:has(C.MPlat) then
+    return "slide"
+  end
+end
  
 
  function BumpSystem:update(dt)
@@ -112,6 +121,21 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
               end
             end
 
+            if item:has(C.MPlat) and other:has(C.PlayerInput) then
+              --local otherX, otherY = world:move(other, pother.x, pother.y, platfilter)
+              --pother.x = pother.x
+              pother.y = actualY - rectother.h
+              other:get(C.Velocity).y = item:get(C.Velocity).y
+              --[[for i, v in pairs(cols[c]) do
+                print(i..": "..tostring(v))
+                if type(v) == "table" then
+                  for j, u in pairs(v) do
+                    print(j..": "..tostring(u))
+                  end
+                end
+              end]]
+            end
+
             if item:has(C.Bounce) then
               local bounce = item:get(C.Bounce)
               if pitem.x < pother.x then
@@ -134,7 +158,7 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
  end
 
  function BumpSystem:draw()
-  love.graphics.setColor(1, 1, 1, 0.6)
+  love.graphics.setColor(1, 0, 1, 1)
   local w
   local e
     for i = 1, self.world.size do
@@ -145,6 +169,8 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
         --print("drawing rect from entity "..tostring(e))
         local x, y, width, height = w:getRect(e)
         love.graphics.rectangle("line", x, y, width, height)
+        love.graphics.print(x, x, y - 28)
+        love.graphics.print(y, x, y - 16)
       end
 
       

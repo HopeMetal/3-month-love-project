@@ -41,7 +41,19 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
       return "cross"
     end
   elseif item:has(C.PlayerInput) and other:has(C.MPlat) then
-    return "cross"
+    local itempos = item:get(C.Position)
+    local itemrect = item:get(C.Rect)
+    local otherpos = other:get(C.Position)
+    local otherect = other:get(C.Rect)
+
+    local itemvel = item:get(C.Velocity)
+
+    if (itempos.y - itemrect.h < otherpos.y and itemvel.y > 0)
+    then
+      return "slide"
+    else
+      return "cross"
+    end
   else
     return "slide"
   end
@@ -105,9 +117,12 @@ end
 
 
             if item:has(C.PlayerInput) then
+              local input = item:get(C.PlayerInput)
               if cols[c].normal.y == -1 and cols[c].normal.x == 0 then
-                local input = item:get(C.PlayerInput)
+                
                 input.onGround = true
+                --item:get(C.Gravity).g = 0
+
                 if other:has(C.Velocity) then
                   input.groundVelocity = other:get(C.Velocity)
                 else
@@ -118,14 +133,21 @@ end
                 else
                   input.groundPosition = nil
                 end
+              else
+                input.onGround = false
+                item:get(C.Gravity).g = 1
               end
             end
 
-            if item:has(C.MPlat) and other:has(C.PlayerInput) then
+            --[[if item:has(C.MPlat) and other:has(C.PlayerInput) then
               --local otherX, otherY = world:move(other, pother.x, pother.y, platfilter)
               --pother.x = pother.x
-              pother.y = actualY - rectother.h
-              other:get(C.Velocity).y = item:get(C.Velocity).y
+
+              --pother.y = actualY - rectother.h
+              other:get(C.Gravity).g = 0
+              other:get(C.PlayerInput).onGround = true
+              --other:get(C.Velocity).y = 0
+              --other:get(C.Velocity).y = item:get(C.Velocity).y
               --[[for i, v in pairs(cols[c]) do
                 print(i..": "..tostring(v))
                 if type(v) == "table" then
@@ -133,8 +155,8 @@ end
                     print(j..": "..tostring(u))
                   end
                 end
-              end]]
-            end
+              end
+            end]]
 
             if item:has(C.Bounce) then
               local bounce = item:get(C.Bounce)

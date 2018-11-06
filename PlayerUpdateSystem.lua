@@ -42,6 +42,7 @@ local RectUpdateSystem = System({C.Acceleration, C.Position, C.Velocity, C.Rect,
             extraV = input.groundVelocity.y
           end]]
           v.y = -input.arate / 2.5 + extraV
+          e:get(C.Gravity).g = 1
           --[[if input.groundPosition then
             p.y = input.groundPosition.y + extraV * dt - e:get(C.Rect).h
           end]]

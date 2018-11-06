@@ -2,6 +2,8 @@ local System = require("libs.Concord.system")
 local C = require("Components")
 local GravitySystem = System({C.Acceleration, C.Gravity})
 
+local grav = 400
+
   function GravitySystem:init(message)
     print(message)
  end
@@ -19,7 +21,7 @@ local GravitySystem = System({C.Acceleration, C.Gravity})
        local a = e:get(C.Acceleration)
        local g = e:get(C.Gravity)
 
-       a.y = a.y + g.g * dt
+       a.y = a.y + g.g * grav * dt
     end 
     -- Alternatively:
     -- for _, e in ipairs(self.pool.objects) do

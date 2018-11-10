@@ -36,36 +36,36 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
  end
  
  local function filter(item, other)
+  local itempos = item:get(C.Position)
+  local itemrect = item:get(C.Rect)
+  local otherpos = other:get(C.Position)
+  local otherect = other:get(C.Rect)
+
   if item:has(C.MPlat) then
     if other:has(C.PlayerInput) then
       return "cross"
     end
-  elseif item:has(C.PlayerInput) and other:has(C.MPlat) then
-    local itempos = item:get(C.Position)
-    local itemrect = item:get(C.Rect)
-    local otherpos = other:get(C.Position)
-    local otherect = other:get(C.Rect)
+  elseif item:has(C.PlayerInput) then
+    if other:has(C.MPlat) then
+      local itemvel = item:get(C.Velocity)
 
-    local itemvel = item:get(C.Velocity)
-
-    if (itempos.y - itemrect.h < otherpos.y and itemvel.y > 0)
-    then
-      return "slide"
-    else
+      if (itempos.y - itemrect.h < otherpos.y and itemvel.y < 0)
+      and ( (itempos.x > otherpos.x) or (itempos.x + itemrect.w < otherpos.x + otherect.w) )
+      then
+        return "cross"
+      else
+        return "slide"
+      end
+    end
+    if otherect.isSensor then
       return "cross"
+    else
+      return "slide"
     end
   else
     return "slide"
   end
  end
-
-local function platfilter(item, other)
-  print("collision with platfilter")
-  if item:has(C.PlayerInput) and other:has(C.MPlat) then
-    return "slide"
-  end
-end
- 
 
  function BumpSystem:update(dt)
     local e
@@ -94,7 +94,7 @@ end
        print("adding rect from entity "..tostring(v))
        table.remove(self.sensorsToAdd)
     end]]
-    --update all the bodies with a non zero velocity
+
     for i = 1, self.bodies.size do
       e = self.bodies:get(i)
       
@@ -124,9 +124,9 @@ end
                 --item:get(C.Gravity).g = 0
 
                 if other:has(C.Velocity) then
-                  input.groundVelocity = other:get(C.Velocity)
-                else
-                  input.groundVelocity = nil
+                  local itemvel = item:get(C.Velocity)
+                  local othervel = other:get(C.Velocity)
+                  itemvel.x = othervel.x
                 end
                 if other:has(C.Position) then
                   input.groundPosition = other:get(C.Position)
@@ -136,6 +136,9 @@ end
               else
                 input.onGround = false
                 item:get(C.Gravity).g = 1
+              end
+              if rectother.isSensor then
+                rectother.on = true
               end
             end
 

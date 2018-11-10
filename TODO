@@ -1,9 +1,8 @@
 TODO:
 
 Differentiate moving/movable objects from static ones.
-Moving platform imporvements: make jumping off a moving platform work
-    Currently player teleports to the bottom of a platform if they attempt to jump off it.
-    Weirdness when jumping onto a corner
+Horizontal moving platforms.
+
 
 LATER:
 Potentially better physics
@@ -11,6 +10,7 @@ Integrated Level editor
 
 DONE:
 
+Moving platform imporvements: make jumping off a moving platform work
 Moving platforms (very barebones implementation (buggy))
 Load the level that was made in Tiled into the game.
 Level exit

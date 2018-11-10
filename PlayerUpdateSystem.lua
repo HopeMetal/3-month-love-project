@@ -9,6 +9,9 @@ local RectUpdateSystem = System({C.Acceleration, C.Position, C.Velocity, C.Rect,
  function RectUpdateSystem:entityAdded(e)
     print(tostring(e).." was added to the System.")
  end
+
+ local leftold = false
+ local rightold = false
  
  function RectUpdateSystem:update(dt)
     local e
@@ -28,10 +31,13 @@ local RectUpdateSystem = System({C.Acceleration, C.Position, C.Velocity, C.Rect,
        if input.pressedKeys["left"] then
         --a.x = -arate
         a.energyX = -arate
-       end
-       if input.pressedKeys["right"]then
+       elseif input.pressedKeys["right"] then
         --a.x = arate
         a.energyX = arate
+       else
+        if leftold or rightold then
+          v.x = 0
+        end
        end
        if input.pressedKeys["z"] then
         if input.onGround then
@@ -74,16 +80,8 @@ local RectUpdateSystem = System({C.Acceleration, C.Position, C.Velocity, C.Rect,
         end
        end
 
-      --[[ if a.energyY < 0 then
-        a.energyY = a.energyY + arate
-        a.y = -arate
-        if a.energyY > 0 then
-          a.energyY = 0
-          a.y = 0
-        end
-       end]]
-
-       --print(a.x, a.y)
+    leftold = input.pressedKeys["left"]
+    rightold = input.pressedKeys["right"]
     end
  
     -- Alternatively:

@@ -54,9 +54,9 @@ return {
           type = "",
           shape = "rectangle",
           x = 408,
-          y = 312,
+          y = 288,
           width = 72,
-          height = 48,
+          height = 72,
           rotation = 0,
           visible = true,
           properties = {}
@@ -94,14 +94,15 @@ return {
           name = "mplat",
           type = "",
           shape = "rectangle",
-          x = 528,
-          y = 648,
+          x = 0,
+          y = 216,
           width = 48,
           height = 24,
           rotation = 0,
           visible = true,
           properties = {
-            ["yVelocity"] = -120
+            ["xVelocity"] = 80,
+            ["yVelocity"] = 0
           }
         }
       }

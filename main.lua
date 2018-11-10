@@ -97,7 +97,7 @@ for objindex, object in pairs(map.layers[1].objects) do
     exitSpawn.w = object.width
     exitSpawn.h = object.height
   elseif object.name == "mplat" then
-    mplatsToAdd[#mplatsToAdd + 1] = {x = object.x, y = object.y, w = object.width, h = object.height, yVel = object.properties.yVelocity}
+    mplatsToAdd[#mplatsToAdd + 1] = {x = object.x, y = object.y, w = object.width, h = object.height, yVel = object.properties.yVelocity or 0, xVel = object.properties.xVelocity or 0}
   else
     wallsToAdd[#wallsToAdd + 1] = {x = object.x, y = object.y, w = object.width, h = object.height}
   end
@@ -108,14 +108,14 @@ end
 
 local Player = Entity()
 Player:give(C.Position, playerSpawn.x, playerSpawn.y)
-:give(C.Rect, 20, 80)
-:give(C.Velocity, 0, 0, 160)
-:give(C.Friction, 640)
-:give(C.Acceleration, 0, 0)
-:give(C.Gravity, 1)
-:give(C.PlayerInput)
-:give(C.Camera)
-:apply()
+      :give(C.Rect, 20, 80)
+      :give(C.Velocity, 0, 0, 160)
+      --:give(C.Friction, 640)
+      :give(C.Acceleration, 0, 0)
+      :give(C.Gravity, 1)
+      :give(C.PlayerInput)
+      :give(C.Camera)
+      :apply()
 
 local Exit = Entity()
 Exit:give(C.Position, exitSpawn.x, exitSpawn.y)
@@ -188,7 +188,7 @@ while #mplatsToAdd > 0 do
    local wallEntity = Entity()
    wallEntity:give(C.Position, wall.x, wall.y)
    :give(C.Rect, wall.w, wall.h)
-   :give(C.Velocity, 0, wall.yVel)
+   :give(C.Velocity, wall.xVel, wall.yVel)
    :give(C.MPlat)
    :apply()
 

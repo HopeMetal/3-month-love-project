@@ -189,14 +189,14 @@ local BumpSystem = System({C.World, "world"}, {C.Rect, C.Position, "bodies"}, {C
     for i = 1, self.world.size do
       w = self.world:get(i):get(C.World).w
       
-      for j = 1, self.bodies.size do
+      --[[for j = 1, self.bodies.size do
         e = self.bodies:get(j)
         --print("drawing rect from entity "..tostring(e))
         local x, y, width, height = w:getRect(e)
         love.graphics.rectangle("line", x, y, width, height)
         love.graphics.print(x, x, y - 28)
         love.graphics.print(y, x, y - 16)
-      end
+      end]]
 
       
       --[[for j = 1, self.sensors.size do

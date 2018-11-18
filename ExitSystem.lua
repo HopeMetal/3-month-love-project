@@ -20,6 +20,7 @@ local ExitSystem = System({C.Position, C.Exit, C.Rect, "exits"}, {C.Time, "time"
         local time = self.time:get(1):get(C.Time)
         
         time.active = false
+        self:getInstance():emit("LoadMap", e:get(C.Exit).destination)
        end
     end 
     -- Alternatively:

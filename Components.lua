@@ -41,7 +41,7 @@ Components.Camera = Component(function(self) end)
 
 Components.Time = Component(function(self) self.m = 0 self.s = 0 self.dtpassed = 0 self.active = true end)
 
-Components.Exit = Component(function(self) end)
+Components.Exit = Component(function(self, dest) self.destination = dest end)
 
 Components.MPlat = Component(function(self) end)
 

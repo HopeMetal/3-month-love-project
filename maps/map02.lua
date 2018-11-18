@@ -8,14 +8,14 @@ return {
   height = 40,
   tilewidth = 24,
   tileheight = 24,
-  nextlayerid = 2,
+  nextlayerid = 4,
   nextobjectid = 7,
   properties = {},
   tilesets = {},
   layers = {
     {
       type = "objectgroup",
-      id = 1,
+      id = 2,
       name = "objects",
       visible = true,
       opacity = 1,
@@ -29,10 +29,10 @@ return {
           name = "",
           type = "",
           shape = "rectangle",
-          x = 192,
-          y = 360,
-          width = 312,
-          height = 72,
+          x = 216,
+          y = 504,
+          width = 144,
+          height = 48,
           rotation = 0,
           visible = true,
           properties = {}
@@ -42,10 +42,10 @@ return {
           name = "",
           type = "",
           shape = "rectangle",
-          x = 600,
-          y = 360,
-          width = 216,
-          height = 72,
+          x = 312,
+          y = 456,
+          width = 48,
+          height = 48,
           rotation = 0,
           visible = true,
           properties = {}
@@ -56,35 +56,33 @@ return {
           type = "",
           shape = "rectangle",
           x = 408,
-          y = 288,
-          width = 72,
-          height = 72,
+          y = 624,
+          width = 96,
+          height = 48,
           rotation = 0,
           visible = true,
           properties = {}
         },
         {
           id = 4,
-          name = "exit",
+          name = "",
           type = "",
           shape = "rectangle",
-          x = 744,
-          y = 312,
-          width = 48,
+          x = 216,
+          y = 624,
+          width = 144,
           height = 48,
           rotation = 0,
           visible = true,
-          properties = {
-            ["Exit"] = "map02"
-          }
+          properties = {}
         },
         {
           id = 5,
           name = "playerSpawn",
           type = "",
           shape = "rectangle",
-          x = 288,
-          y = 336,
+          x = 240,
+          y = 480,
           width = 24,
           height = 24,
           rotation = 0,
@@ -93,18 +91,17 @@ return {
         },
         {
           id = 6,
-          name = "mplat",
+          name = "exit",
           type = "",
           shape = "rectangle",
-          x = 0,
-          y = 216,
+          x = 216,
+          y = 576,
           width = 48,
-          height = 24,
+          height = 48,
           rotation = 0,
           visible = true,
           properties = {
-            ["xVelocity"] = 80,
-            ["yVelocity"] = 0
+            ["Exit"] = "map01"
           }
         }
       }
